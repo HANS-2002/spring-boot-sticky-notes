@@ -1,11 +1,11 @@
-FROM maven:3.5-jdk-8-slim AS build
+# Build Jar File
+FROM maven:3.9.3-amazoncorretto-20 as stage1
 WORKDIR /home/app
-COPY src     /home/app/src
-COPY pom.xml /home/app
-RUN mvn clean package
+COPY . .
+RUN mvn -f /home/app/pom.xml clean package
 
-FROM eclipse-temurin:17
-LABEL maintainer="pattnaikhans@gmail.com"
-WORKDIR /app
-COPY /target/stickyNotesAPI-0.0.1-SNAPSHOT.jar /app/stickyNotesAPI-0.0.1.jar
-ENTRYPOINT ["java", "-jar", "stickyNotesAPI-0.0.1.jar"]
+# Create an Image
+FROM openjdk:11-jre-slim
+EXPOSE 8080
+COPY --from=stage1 /home/app/target/stickyNotesAPI-0.0.1-SNAPSHOT.jar myapp.jar
+ENTRYPOINT ["java", "-jar", "myapp.jar"]
