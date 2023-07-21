@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.example.stickyNotesAPI.models.Users.Users;
 import com.example.stickyNotesAPI.repository.NoteRepository;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
