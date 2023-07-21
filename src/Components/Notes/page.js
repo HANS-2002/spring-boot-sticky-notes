@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { API_PROXY } from "../../config.js";
+import "./style.css";
+import { LOCAL_API_PROXY, GLOBAL_API_PROXY } from "../../config.js";
 import StickyNote from "../StickyNote/page.js";
 
 export default function Notes(props) {
   const [noteList, setNoteList] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_PROXY}/getNotesWithUserId?userId=${props.username}`)
+    fetch(`${GLOBAL_API_PROXY}/getNotesWithUserId?userId=${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         setNoteList(data);
@@ -50,6 +51,33 @@ export default function Notes(props) {
           })}
         </div>
       ) : null}
+      <button
+        type="button"
+        onClick={(e) => {
+          fetch(`${GLOBAL_API_PROXY}/newNote`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: props.username,
+              title: "",
+              content: "",
+              color: "#FFFF00",
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              setNoteList([...noteList, data]);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }}
+        className="newNoteBtn border border-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none text-white hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+      >
+        + New Note
+      </button>
     </>
   );
 }
