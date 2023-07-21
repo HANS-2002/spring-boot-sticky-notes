@@ -26,11 +26,6 @@ public class NotesController {
     NoteRepository notesRepo;
 
     // Get Mapping
-    @GetMapping("/getAllNotes")
-    public List<Notes> showAllNotes() {
-        return notesRepo.findAll();
-    }
-
     @GetMapping("/getNotesWithUserId")
     public List<Notes> getNotesWithUserId(@RequestParam("userId") String userId) {
         return notesRepo.findNoteByUserId(userId);
