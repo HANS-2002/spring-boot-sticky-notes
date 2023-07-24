@@ -4,6 +4,10 @@
   margin: 10px;
 }
 
+#colorSelect{
+  background: linear-gradient("#ffcccc", "#ccffcc", "#ccccff");
+}
+
 
 
 

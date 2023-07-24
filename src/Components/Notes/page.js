@@ -22,7 +22,7 @@ export default function Notes({ setHasLogin, setUserName, username }) {
       userId: username,
       title: "",
       content: "",
-      color: "#FFFF00",
+      color: "#ffcccc",
     })
       .then((response) => {
         setNoteList([...noteList, response.data]);
