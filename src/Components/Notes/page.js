@@ -15,7 +15,7 @@ export default function Notes({ setHasLogin, setUserName, username }) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [username]);
 
   function onNewNote() {
     axios.post(`${GLOBAL_API_PROXY}/newNote`, {
@@ -38,10 +38,10 @@ export default function Notes({ setHasLogin, setUserName, username }) {
         <div className="text-2xl font-bold">Notes</div>
         <div className="flex align-middle">
           <div className="logs user">
-          <i className="fa-solid fa-user "></i> 
-          <div>
-          {username}
-          </div>
+            <i className="fa-solid fa-user "></i>
+            <div>
+              {username}
+            </div>
           </div>
           <div
             className="cursor-pointer font-bold p-4 text-red-400"

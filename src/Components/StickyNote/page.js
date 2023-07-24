@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LOCAL_API_PROXY, GLOBAL_API_PROXY } from "../../config.js";
+import { GLOBAL_API_PROXY } from "../../config.js";
 import "./style.css";
 import axios from "axios";
 
@@ -27,10 +27,6 @@ export default function StickyNote(props) {
           },
         }
       )
-      .then((response) => {
-        // console.log(response.data);
-        // window.location.reload();
-      })
       .catch((error) => {
         console.log(error);
       });
@@ -45,13 +41,13 @@ export default function StickyNote(props) {
     <>
       {!isDeleted && (
         <div
-          className="note p-4 rounded-md"
+          className="note note-container p-4 rounded-md"
           style={{ backgroundColor: `${color}` }}
         >
           <div className="w-100 flex flex-row justify-between mb-4">
             <input
               type="text"
-              className="bg-transparent outline-none"
+              className="bg-transparent outline-none font-bold"
               placeholder="Note Title"
               defaultValue={title}
               onChange={(e) => {
@@ -61,7 +57,7 @@ export default function StickyNote(props) {
             />
             <div
               className="cursor-pointer"
-              onClick={(e) => {
+              onClick={() => {
                 axios
                   .delete(`${GLOBAL_API_PROXY}/deleteNote`, {
                     headers: {
@@ -73,7 +69,6 @@ export default function StickyNote(props) {
                   })
                   .then((response) => {
                     setIsDeleted(true);
-                    // window.location.reload();
                   })
                   .catch((error) => {
                     console.log(error);
@@ -101,12 +96,12 @@ export default function StickyNote(props) {
                 className="cursor-pointer w-8 h-8 flex justify-center items-center rounded-xl"
                 style={{ backgroundColor: color, filter: "brightness(90%)" }}
               >
-                {"➡️"}
+                ➡️
               </div>
             ) : (
               <div className="flex flex-row justify-around">
                 <div
-                  className="w-8 h-8 border-2 border-red-500"
+                  className="w-8 h-8 border-2 cursor-pointer border-red-500 rounded-2xl"
                   onClick={() => {
                     handleColorChange("#ffcccc");
                     setIsColorSelect(false);
@@ -114,7 +109,7 @@ export default function StickyNote(props) {
                   style={{ backgroundColor: "#ffcccc" }}
                 ></div>
                 <div
-                  className="w-8 h-8 border-2 border-green-500"
+                  className="w-8 h-8 border-2 cursor-pointer border-green-500 rounded-2xl"
                   onClick={() => {
                     handleColorChange("#ccffcc");
                     setIsColorSelect(false);
@@ -122,7 +117,7 @@ export default function StickyNote(props) {
                   style={{ backgroundColor: "#ccffcc" }}
                 ></div>
                 <div
-                  className="w-8 h-8 border-2 border-blue-500"
+                  className="w-8 h-8 border-2 cursor-pointer border-blue-500 rounded-2xl"
                   onClick={() => {
                     handleColorChange("#ccccff");
                     setIsColorSelect(false);
