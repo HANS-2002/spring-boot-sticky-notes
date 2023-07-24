@@ -1,42 +1,62 @@
 import { useEffect, useState } from "react";
 import "./style.css";
-import { LOCAL_API_PROXY, GLOBAL_API_PROXY } from "../../config.js";
+import axios from 'axios';
+import { GLOBAL_API_PROXY } from "../../config.js";
 import StickyNote from "../StickyNote/page.js";
 
-export default function Notes(props) {
+export default function Notes({ setHasLogin, setUserName, username }) {
   const [noteList, setNoteList] = useState([]);
 
   useEffect(() => {
-    fetch(`${GLOBAL_API_PROXY}/getNotesWithUserId?userId=${props.username}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setNoteList(data);
+    axios.get(`${GLOBAL_API_PROXY}/getNotesWithUserId?userId=${username}`)
+      .then((response) => {
+        setNoteList(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  function onNewNote() {
+    axios.post(`${GLOBAL_API_PROXY}/newNote`, {
+      userId: username,
+      title: "",
+      content: "",
+      color: "#FFFF00",
+    })
+      .then((response) => {
+        setNoteList([...noteList, response.data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <div className="flex flex-row justify-between items-center p-4 text-white">
         <div className="text-2xl font-bold">Notes</div>
-        <div>
-          (Logged in as {props.username}){" "}
-          <span
+        <div className="flex align-middle">
+          <div className="logs user">
+          <i className="fa-solid fa-user "></i> 
+          <div>
+          {username}
+          </div>
+          </div>
+          <div
             className="cursor-pointer font-bold p-4 text-red-400"
-            onClick={(e) => {
+            onClick={() => {
               localStorage.removeItem("NotesUsername");
-              props.setHasLogin(false);
-              props.setUserName("");
+              setHasLogin(false);
+              setUserName("");
             }}
           >
             Logout
-          </span>
+          </div>
         </div>
       </div>
-      {noteList.length > 0 ? (
-        <div className="flex lg:flex-row lg:justify-start lg:flex-wrap p-4 justify-center items-center flex-col">
+      {noteList.length > 0 && (
+        <div className="flex lg:flex-row lg:justify-start lg:flex-wrap  p-4 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
               <StickyNote
@@ -44,37 +64,17 @@ export default function Notes(props) {
                 id={note.id}
                 title={note.title}
                 content={note.content}
-                username={props.username}
+                username={username}
                 color={note.color}
               />
             );
           })}
         </div>
-      ) : null}
+      )}
       <button
         type="button"
-        onClick={(e) => {
-          fetch(`${GLOBAL_API_PROXY}/newNote`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userId: props.username,
-              title: "",
-              content: "",
-              color: "#FFFF00",
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              setNoteList([...noteList, data]);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }}
-        className="newNoteBtn border border-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none text-white hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+        onClick={onNewNote}
+        className="newNoteBtn flex justify-center  border border-gray-700 rounded-md px-4 py-2 m-2 transition duration-300 ease select-none text-white hover:bg-gray-800 hover:border-gray-500 focus:outline-none focus:shadow-outline"
       >
         + New Note
       </button>

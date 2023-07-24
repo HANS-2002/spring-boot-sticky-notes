@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LOCAL_API_PROXY, GLOBAL_API_PROXY } from "../../config.js";
 import "./style.css";
+import axios from "axios";
 
 export default function StickyNote(props) {
   const [title, setTitle] = useState(props.title);
@@ -8,22 +9,19 @@ export default function StickyNote(props) {
   const [color, setColor] = useState(props.color);
 
   function onEditPush(type, value) {
-    fetch(`${GLOBAL_API_PROXY}/updateNote`, {
-      method: "PUT",
+    axios.put(`${GLOBAL_API_PROXY}/updateNote`, {
+      id: props.id,
+      title: type === "title" ? value : title,
+      content: type === "content" ? value : content,
+      color: type === "color" ? value : color,
+      userId: props.username,
+    }, {
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: props.id,
-        title: type === "title" ? value : title,
-        content: type === "content" ? value : content,
-        color: type === "color" ? value : color,
-        userId: props.username,
-      }),
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
+      .then((response) => {
+        // console.log(response.data);
         // window.location.reload();
       })
       .catch((error) => {
@@ -31,9 +29,14 @@ export default function StickyNote(props) {
       });
   }
 
+  function handleColorChange(e) {
+    setColor(e.target.value);
+    onEditPush("color", e.target.value);
+  }
+
   return (
     <>
-      <div className="note p-4" style={{ backgroundColor: `${color}` }}>
+      <div className="note p-4 rounded-md" style={{ backgroundColor: `${color}` }}>
         <div className="w-100 flex flex-row justify-between mb-4">
           <input
             type="text"
@@ -48,17 +51,15 @@ export default function StickyNote(props) {
           <div
             className="cursor-pointer"
             onClick={(e) => {
-              fetch(`${GLOBAL_API_PROXY}/deleteNote`, {
-                method: "DELETE",
+              axios.delete(`${GLOBAL_API_PROXY}/deleteNote`, {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
+                data: {
                   noteId: props.id,
-                }),
+                },
               })
-                .then((response) => response.json())
-                .then((data) => {
+                .then((response) => {
                   window.location.reload();
                 })
                 .catch((error) => {
@@ -66,7 +67,7 @@ export default function StickyNote(props) {
                 });
             }}
           >
-            ❌
+            <i class="fa-solid fa-trash" style={{ color: "#ff0000" }}></i>
           </div>
         </div>
         <textarea
@@ -80,16 +81,12 @@ export default function StickyNote(props) {
             onEditPush("content", e.target.value);
           }}
         />
-        <div className="w-full flex justify-end">
-          <input
-            type="color"
-            defaultValue={color}
-            onChange={(e) => {
-              setColor(e.target.value);
-              onEditPush("color", e.target.value);
-            }}
-            className="w-8 h-8 colorInput outline-none cursor-pointer bg-transparent"
-          />
+        <div className="mt-4 rounded-md">
+          <select id="colorSelect" value={color} onChange={handleColorChange} className="rounded-xl">
+            <option value="#ffcccc" style={{ background: "#ffcccc" }}></option>
+            <option value="#ccffcc" style={{ background: "#ccffcc" }}></option>
+            <option value="#ccccff" style={{ background: "#ccccff" }}></option>
+          </select>
         </div>
       </div>
     </>

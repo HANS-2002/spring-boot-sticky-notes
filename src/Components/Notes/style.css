@@ -1,5 +1,9 @@
 .newNoteBtn{
-    position: absolute;
-    top: 90%;
-    left: 90%;
+    margin: 10px auto;
+}
+
+.user{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
