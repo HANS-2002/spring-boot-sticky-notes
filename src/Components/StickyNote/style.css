@@ -4,12 +4,11 @@
   margin: 10px;
 }
 
-#colorSelect{
+#colorSelect {
   background: linear-gradient("#ffcccc", "#ccffcc", "#ccccff");
 }
 
-
-
-
-
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
 

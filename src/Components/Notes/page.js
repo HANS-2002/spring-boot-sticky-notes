@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
 import "./style.css";
-import axios from 'axios';
+import axios from "axios";
 import { GLOBAL_API_PROXY } from "../../config.js";
 import StickyNote from "../StickyNote/page.js";
+import Dark from "../DarkMode/Dark";
 
-export default function Notes({ setHasLogin, setUserName, username }) {
+export default function Notes({
+  setHasLogin,
+  setUserName,
+  username,
+  toggleDarkMode,
+  dark,
+  setDark,
+}) {
   const [noteList, setNoteList] = useState([]);
 
   useEffect(() => {
-    axios.get(`${GLOBAL_API_PROXY}/getNotesWithUserId?userId=${username}`)
+    axios
+      .get(`${GLOBAL_API_PROXY}/getNotesWithUserId?userId=${username}`)
       .then((response) => {
         setNoteList(response.data);
       })
@@ -18,12 +27,13 @@ export default function Notes({ setHasLogin, setUserName, username }) {
   }, [username]);
 
   function onNewNote() {
-    axios.post(`${GLOBAL_API_PROXY}/newNote`, {
-      userId: username,
-      title: "",
-      content: "",
-      color: "#ffcccc",
-    })
+    axios
+      .post(`${GLOBAL_API_PROXY}/newNote`, {
+        userId: username,
+        title: "",
+        content: "",
+        color: "#ffcccc",
+      })
       .then((response) => {
         setNoteList([...noteList, response.data]);
       })
@@ -33,18 +43,21 @@ export default function Notes({ setHasLogin, setUserName, username }) {
   }
 
   return (
-    <>
-      <div className="flex flex-row justify-between items-center p-4 text-white">
+    <div className={dark ? "dark" : ""}>
+      <div className=" dark:bg-gray-900 flex flex-row justify-between shadow-md items-center p-4 text-black dark:text-white">
         <div className="text-2xl font-bold">Notes</div>
         <div className="flex align-middle">
           <div className="logs user">
+            <Dark
+              toggleDarkMode={toggleDarkMode}
+              dark={dark}
+              setDark={setDark}
+            />
             <i className="fa-solid fa-user "></i>
-            <div>
-              {username}
-            </div>
+            <div>{username}</div>
           </div>
           <div
-            className="cursor-pointer font-bold p-4 text-red-400"
+            className="cursor-pointer font-bold p-4 dark:text-red-400"
             onClick={() => {
               localStorage.removeItem("NotesUsername");
               setHasLogin(false);
@@ -56,7 +69,7 @@ export default function Notes({ setHasLogin, setUserName, username }) {
         </div>
       </div>
       {noteList.length > 0 && (
-        <div className="flex lg:flex-row lg:justify-start lg:flex-wrap  p-4 justify-center items-center flex-col">
+        <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap  p-4 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
               <StickyNote
@@ -74,10 +87,10 @@ export default function Notes({ setHasLogin, setUserName, username }) {
       <button
         type="button"
         onClick={onNewNote}
-        className="newNoteBtn flex justify-center  border border-gray-700 rounded-md px-4 py-2 m-2 transition duration-300 ease select-none text-white hover:bg-gray-800 hover:border-gray-500 focus:outline-none focus:shadow-outline"
+        className="newNoteBtn flex justify-center   shadow-md bg-slate-50 hover:bg-slate-200 dark:bg-slate-700  rounded-md px-4 py-2 m-2 transition duration-100 ease select-none text-black dark:text-white dark:hover:bg-gray-600 dark:hover:transition ease-linear   "
       >
         + New Note
       </button>
-    </>
+    </div>
   );
 }
