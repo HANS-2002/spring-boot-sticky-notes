@@ -41,7 +41,7 @@ export default function StickyNote(props) {
     <>
       {!isDeleted && (
         <div
-          className="note note-container p-4 rounded-md"
+          className="note p-4 rounded-md shadow-lg"
           style={{ backgroundColor: `${color}` }}
         >
           <div className="w-100 flex flex-row justify-between mb-4">
@@ -79,7 +79,7 @@ export default function StickyNote(props) {
             </div>
           </div>
           <textarea
-            className="bg-transparent outline-none w-full overflow-hidden resize-none"
+            className=" scroll-hidden bg-transparent outline-none w-full  resize-none"
             placeholder="Note Content"
             rows={9}
             maxLength={250}
