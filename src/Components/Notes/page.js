@@ -4,7 +4,7 @@ import axios from "axios";
 import { GLOBAL_API_PROXY } from "../../config.js";
 import StickyNote from "../StickyNote/page.js";
 import Dark from "../DarkMode/Dark";
-import { CirclesWithBar, InfinitySpin } from "react-loader-spinner";
+import { CirclesWithBar } from "react-loader-spinner";
 
 export default function Notes({
   setHasLogin,
@@ -69,7 +69,7 @@ export default function Notes({
           </div>
         </div>
       </div>
-      {noteList.length <= 0 ? (
+      {noteList.length ? (
         <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap  p-4 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
