@@ -4,6 +4,7 @@ import axios from "axios";
 import { GLOBAL_API_PROXY } from "../../config.js";
 import StickyNote from "../StickyNote/page.js";
 import Dark from "../DarkMode/Dark";
+import { CirclesWithBar, InfinitySpin } from "react-loader-spinner";
 
 export default function Notes({
   setHasLogin,
@@ -68,7 +69,7 @@ export default function Notes({
           </div>
         </div>
       </div>
-      {noteList.length > 0 && (
+      {noteList.length <= 0 ? (
         <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap  p-4 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
@@ -82,6 +83,23 @@ export default function Notes({
               />
             );
           })}
+        </div>
+      ) : (
+        <div className=" dark:bg-gray-900 flex p-4 justify-center items-center flex-col min-h-[80vh]">
+          <CirclesWithBar
+            height="80"
+            width="80"
+            radius="9"
+            color="none"
+            innerCircleColor="red"
+            outerCircleColor="green"
+            ariaLabel="Your notes are loading...."
+            wrapperStyle
+            wrapperClass
+          />
+          <p className="mt-8" style={{ color: "white" }}>
+            Your notes are loading....
+          </p>
         </div>
       )}
       <button
