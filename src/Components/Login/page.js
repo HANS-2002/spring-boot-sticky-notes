@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Dark from "../DarkMode/Dark";
+import Moon from "../../Assets/images/moon.png";
+import Bulb from "../../Assets/images/bulb.png";
 
 export default function Login({
   setHasLogin,
@@ -15,10 +16,14 @@ export default function Login({
       <div className={dark ? "dark" : ""}>
         <section className="bg-gray-100 dark:bg-gray-900 w-full min-h-screen flex flex-col items-center justify-center">
           <div className=" absolute right-3 top-0 mt-3 ">
-            <Dark
-              toggleDarkMode={toggleDarkMode}
-              dark={dark}
-              setDark={setDark}
+            <img
+              src={dark ? Moon : Bulb}
+              title={`${dark ? "Turn on lights" : "Turn off lights"}`}
+              className="cursor-pointer"
+              alt="mode"
+              height="45rem"
+              width="45rem"
+              onClick={toggleDarkMode}
             />
           </div>
           <div className="flex flex-col items-center justify-center px-6 py-8 w-full md:h-screen lg:py-0">

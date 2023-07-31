@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <div className={dark ? "dark " : ""}>
-        <div className="dark:bg-gray-900 bg-slate-100 h-screen">
+        <div className="dark:bg-gray-900 bg-slate-100 pb-2 min-h-screen">
           {hasLogin ? (
             <Notes
               toggleDarkMode={toggleDarkMode}

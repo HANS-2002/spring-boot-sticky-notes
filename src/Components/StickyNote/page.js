@@ -75,7 +75,7 @@ export default function StickyNote(props) {
                   });
               }}
             >
-              <i class="fa-solid fa-trash" style={{ color: "#ff0000" }}></i>
+              <i className="fa-solid fa-trash" style={{ color: "#ff0000" }}></i>
             </div>
           </div>
           <textarea
