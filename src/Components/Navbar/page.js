@@ -47,7 +47,6 @@ export default function Navbar({
             <img
               src={User}
               title={`Logged in as ${username}`}
-              className="cursor-pointer"
               alt="user"
               height="45rem"
               width="45rem"
