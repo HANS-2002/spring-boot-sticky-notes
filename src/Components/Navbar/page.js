@@ -34,14 +34,14 @@ export default function Navbar({
           <div className="p-1 flex flex-col items-center">
             <img
               src={dark ? Moon : Bulb}
-              title={`${dark ? "Turn on lights" : "Turn off lights"}`}
+              title={dark ? "Switch to light mode" : "Switch to dark mode"}
               className="cursor-pointer"
               alt="mode"
               height="45rem"
               width="45rem"
               onClick={toggleDarkMode}
             />
-            <p className="text-center">Dark / Light</p>
+            <p className="text-center">{dark ? "Dark Mode" : "Light Mode"}</p>
           </div>
           <div className="p-1 flex flex-col items-center">
             <img

@@ -25,7 +25,7 @@ export default function Login({
               width="45rem"
               onClick={toggleDarkMode}
             />
-            <p className="text-center">Dark / Light</p>
+            <p className="text-center">{dark ? "Dark Mode" : "Light Mode"}</p>
           </div>
           <div className="flex flex-col items-center justify-center px-6 py-8 w-full md:h-screen lg:py-0">
             <div className="w-full bg-white rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
