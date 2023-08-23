@@ -4,7 +4,7 @@ import "./style.css";
 import { GLOBAL_API_PROXY } from "../../config.js";
 import Navbar from "../Navbar/page.js";
 import StickyNote from "../StickyNote/page.js";
-import { CirclesWithBar } from "react-loader-spinner";
+import { ProgressBar } from "react-loader-spinner";
 
 export default function Notes({
   setHasLogin,
@@ -54,7 +54,7 @@ export default function Notes({
         onNewNote={onNewNote}
       />
       {noteList.length > 0 ? (
-        <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap p-4 mt-20 lg:mt-12 justify-center items-center flex-col">
+        <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap p-4 mt-28 lg:mt-24 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
               <StickyNote
@@ -70,15 +70,16 @@ export default function Notes({
         </div>
       ) : (
         <div className=" dark:bg-gray-900 flex p-4 justify-center items-center flex-col min-h-[80vh] mt-20 lg:mt-12">
-          <CirclesWithBar
+          <ProgressBar
             height="80"
             width="80"
-            radius="9"
-            color="none"
-            innerCircleColor="red"
-            outerCircleColor="green"
+            ariaLabel="progress-bar-loading"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar-wrapper"
+            borderColor={dark ? "white" : "#2b2c28"}
+            barColor={dark ? "#7d8cc4" : "#7DE2D1"}
           />
-          <p className="mt-8" style={{ color: "white" }}>
+          <p className="mt-8 dark:text-slate-200 text-slate-800 font-bold">
             Your notes are loading....
           </p>
         </div>
