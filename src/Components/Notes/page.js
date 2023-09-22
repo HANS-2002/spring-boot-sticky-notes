@@ -12,7 +12,6 @@ export default function Notes({
   username,
   toggleDarkMode,
   dark,
-  setDark,
 }) {
   const [noteList, setNoteList] = useState([]);
 
@@ -53,7 +52,13 @@ export default function Notes({
         setUserName={setUserName}
         onNewNote={onNewNote}
       />
-      {noteList.length > 0 ? (
+      {noteList.length === 0 ? (
+        <div className=" dark:bg-gray-900 flex p-4 justify-center items-center flex-col min-h-[80vh] mt-20 lg:mt-12">
+          <p className="mt-8 dark:text-slate-200 text-slate-800 font-bold text-3xl">
+            No notes created !!
+          </p>
+        </div>
+      ) : noteList.length > 0 ? (
         <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap p-4 mt-28 lg:mt-24 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
