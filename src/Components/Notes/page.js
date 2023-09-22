@@ -58,7 +58,7 @@ export default function Notes({
             No notes created !!
           </p>
         </div>
-      ) : noteList.length > 0 ? (
+      ) : (noteList.length > 0 ? (
         <div className=" dark:bg-gray-900 flex lg:flex-row lg:justify-start lg:flex-wrap p-4 mt-28 lg:mt-24 justify-center items-center flex-col">
           {noteList.map((note) => {
             return (
@@ -87,7 +87,7 @@ export default function Notes({
           <p className="mt-8 dark:text-slate-200 text-slate-800 font-bold">
             Your notes are loading....
           </p>
-        </div>
+        </div>)
       )}
     </div>
   );
