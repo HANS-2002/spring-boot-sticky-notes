@@ -12,7 +12,6 @@ export default function Notes({
   username,
   toggleDarkMode,
   dark,
-  // setDark,
 }) {
   const [noteList, setNoteList] = useState([]);
 
